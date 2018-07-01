@@ -25,7 +25,10 @@
        sum(bcd502) as bcd502,
        aaa021,
        rtrim(to_char(TRUNC(sum(bcd502) / sum(bcd501), 3), 'fm9990.999'),
-             '.') as bcd503
+             '.') as bcd503,
+         (select aaa020
+                  from aa12
+                 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa020
   from (select bcd501 as bcd501,
                bcd502 as bcd502,
                (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
@@ -41,7 +44,10 @@
        sum(bcd502) as bcd502,
        aaa021,
        rtrim(to_char(TRUNC(sum(bcd502) / sum(bcd501), 3), 'fm9990.999'),
-             '.') as bcd503
+             '.') as bcd503,
+             (select aaa020
+                  from aa12
+                 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa020
   from (select bcd501 as bcd501,
                bcd502 as bcd502,
                (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
@@ -70,7 +76,7 @@
          order by bcd503 desc
        )
        where aaa021 != '青海省省本级'
- order by bcd503 desc
+ order by aaa020
         ]]>
 </select>
 
@@ -85,14 +91,14 @@
                  where aaa020 = substr(aae017,1,6) || '000000') as aaa021,
                  (select aaa020
                   from aa12
-                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+                 where aaa020 = substr(aae017,1,6) || '000000') as aaa020
           from cd50
           where cd50.aae036 = #{aae036,jdbcType=VARCHAR} and cd50.aae017 like (substr(#{aae017,jdbcType=VARCHAR},1,4) || '%')
          group by substr(aae017,1,6)
          order by bcd503 desc
        )
     where aaa021 != '西宁市市本级'
- order by bcd503 desc
+ order by aaa020
         ]]>
     </select>
 
@@ -115,7 +121,7 @@
          order by bcd513 desc
        )
        where aaa021 is not null and aaa021 != '青海省省本级'
- order by bcd513 desc
+ order by aaa020
         ]]>
     </select>
 
@@ -130,14 +136,14 @@
                  where aaa020 = substr(aae017,1,6) || '000000') as aaa021,
                  (select aaa020
                   from aa12
-                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+                 where aaa020 = substr(aae017,1,6) || '000000') as aaa020
           from cd51
           where cd51.adc210 = #{adc210,jdbcType=VARCHAR} and cd51.aae017 like (substr(#{aae017,jdbcType=VARCHAR},1,4) || '%')
          group by substr(aae017,1,6)
          order by bcd513 desc
        )
        where aaa021 is not null and aaa021 != '西宁市市本级' and aaa021 != '西宁市'
- order by bcd513 desc
+ order by aaa020
         ]]>
     </select>
 
@@ -165,7 +171,10 @@
    select sum(bcd511) bcd511,
        sum(bcd512) as bcd512,
        aaa021,
-       rtrim(to_char(TRUNC(sum(bcd511) / (sum(bcd512)+sum(bcd511)),3), 'fm9990.999'), '.') as bcd513
+       rtrim(to_char(TRUNC(sum(bcd511) / (sum(bcd512)+sum(bcd511)),3), 'fm9990.999'), '.') as bcd513,
+       (select aaa020
+                  from aa12
+                 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa020
   from (select bcd511 as bcd511,
                bcd512 as bcd512,
                (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
@@ -181,7 +190,10 @@
    select sum(bcd511) bcd511,
        sum(bcd512) as bcd512,
        aaa021,
-       rtrim(to_char(TRUNC(sum(bcd511) / (sum(bcd512)+sum(bcd511)),3), 'fm9990.999'), '.') as bcd513
+       rtrim(to_char(TRUNC(sum(bcd511) / (sum(bcd512)+sum(bcd511)),3), 'fm9990.999'), '.') as bcd513,
+       (select aaa020
+                  from aa12
+                 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa020
   from (select bcd511 as bcd511,
                bcd512 as bcd512,
                (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
@@ -198,7 +210,10 @@
        sum(bcd522) as bcd522,
        aaa021,
        case when sum(bcd521) = 0 then '0'
-                 else rtrim(to_char(TRUNC(sum(bcd522) / (sum(bcd521)),3), 'fm9990.999'), '.') end as bcd523
+                 else rtrim(to_char(TRUNC(sum(bcd522) / (sum(bcd521)),3), 'fm9990.999'), '.') end as bcd523,
+                 (select aaa020
+                  from aa12
+                 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa020
   from (select bcd521 as bcd521,
                bcd522 as bcd522,
                (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
@@ -215,7 +230,10 @@
        sum(bcd522) as bcd522,
        aaa021,
        case when sum(bcd521) = 0 then '0'
-                 else rtrim(to_char(TRUNC(sum(bcd522) / (sum(bcd521)),3), 'fm9990.999'), '.') end as bcd523
+                 else rtrim(to_char(TRUNC(sum(bcd522) / (sum(bcd521)),3), 'fm9990.999'), '.') end as bcd523,
+         (select aaa020
+                  from aa12
+                 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa020
   from (select bcd521 as bcd521,
                bcd522 as bcd522,
                (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
@@ -262,7 +280,7 @@
          group by substr(aae017,1,4)
          order by bcd523 desc
        )
- order by bcd523 desc
+ order by aaa020
         ]]>
     </select>
 
@@ -278,14 +296,14 @@ select bcd521, bcd522, bcd523, aaa021,aaa020
                  where aaa020 = substr(aae017,1,6) || '000000') as aaa021,
                  (select aaa020
                   from aa12
-                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+                 where aaa020 = substr(aae017,1,6) || '000000') as aaa020
           from cd52
           where cd52.bcc80b = #{bcc80b,jdbcType=VARCHAR} and cd52.aae017 like (substr(#{aae017,jdbcType=VARCHAR},1,4) || '%')
          group by substr(aae017,1,6)
          order by bcd523 desc
        )
        where aaa021 is not null
- order by bcd523 desc
+ order by aaa020
         ]]>
     </select>
 
@@ -312,7 +330,10 @@ select bcd521, bcd522, bcd523, aaa021,aaa020
    select sum(bcd531) bcd531,
        sum(bcd532) as bcd532,
        aaa021,
-       rtrim(to_char(TRUNC(sum(bcd532) / sum(bcd531),3), 'fm9990.999'), '.') as bcd533
+       rtrim(to_char(TRUNC(sum(bcd532) / sum(bcd531),3), 'fm9990.999'), '.') as bcd533,
+       (select aaa020
+                  from aa12
+                 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa020
   from (select bcd531 as bcd531,
                bcd532 as bcd532,
                (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
@@ -328,7 +349,10 @@ select bcd521, bcd522, bcd523, aaa021,aaa020
    select sum(bcd531) bcd531,
        sum(bcd532) as bcd532,
        aaa021,
-       rtrim(to_char(TRUNC(sum(bcd532) / sum(bcd531),3), 'fm9990.999'), '.') as bcd533
+       rtrim(to_char(TRUNC(sum(bcd532) / sum(bcd531),3), 'fm9990.999'), '.') as bcd533,
+       (select aaa020
+                  from aa12
+                 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa020
   from (select bcd531 as bcd531,
                bcd532 as bcd532,
                (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
@@ -357,7 +381,7 @@ select bcd521, bcd522, bcd523, aaa021,aaa020
          order by bcd533 desc
        )
        WHERE AAA021 != '青海省' AND AAA021 != '青海省省本级'
- order by bcd533 desc
+ order by aaa020
         ]]>
     </select>
 
@@ -373,14 +397,14 @@ select bcd521, bcd522, bcd523, aaa021,aaa020
                  where aaa020 = substr(aae017,1,6) || '000000') as aaa021,
                  (select aaa020
                   from aa12
-                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+                 where aaa020 = substr(aae017,1,6) || '000000') as aaa020
           from cd53
           where cd53.bcca45 = #{bcca45,jdbcType=VARCHAR} and cd53.aae017 like (substr(#{aae017,jdbcType=VARCHAR},1,4) || '%')
          group by substr(aae017,1,6)
          order by bcd533 desc
        )
        where aaa021 is not null and aaa021 != '西宁市市本级' and aaa021 != '西宁市'
- order by bcd533 desc
+ order by aaa020
         ]]>
     </select>
 

@@ -36,12 +36,30 @@ public class QhldzmInterviceImpl implements QhldzmIntService {
     public Cd50ViewDTO findCd50(String aae036, String aae017) throws Exception {
         Cd50ViewDTO cd50ViewDTO = null;
         if(aae017!=null && aae017.endsWith("000000")){//省级
-            List cd50sList = dao.findCd50sList(aae036,aae017);
+            List<Cd50ViewDTO> cd50sList = dao.findCd50sList(aae036,aae017);
+            for(int i=0;i<cd50sList.size();i++){
+                String aaa020 = cd50sList.get(i).getAaa020();
+                Double aaa0200 = new Double(aaa020);
+                Double aaa02000 = aaa0200/100000000000l;
+                cd50sList.get(i).setAaa0200(aaa02000);
+            }
             cd50ViewDTO = dao.findCd50s(aae036,aae017);
+            Double aaa0200 = new Double(cd50ViewDTO.getAaa020());
+            Double aaa02000 = aaa0200/100000000000l;
+            cd50ViewDTO.setAaa0200(aaa02000);
             cd50ViewDTO.setCd50List(cd50sList);
         }else if(aae017!=null && aae017.endsWith("0000")){//市州级
-            List cd50zList = dao.findCd50zList(aae036,aae017);
+            List<Cd50ViewDTO> cd50zList = dao.findCd50zList(aae036,aae017);
+            for(int i=0;i<cd50zList.size();i++){
+                String aaa020 = cd50zList.get(i).getAaa020();
+                Double aaa0200 = new Double(aaa020);
+                Double aaa02000 = aaa0200/100000000000l;
+                cd50zList.get(i).setAaa0200(aaa02000);
+            }
             cd50ViewDTO = dao.findCd50z(aae036,aae017);
+            Double aaa0200 = new Double(cd50ViewDTO.getAaa020());
+            Double aaa02000 = aaa0200/100000000000l;
+            cd50ViewDTO.setAaa0200(aaa02000);
             cd50ViewDTO.setCd50List(cd50zList);
         }else{//区县级
             cd50ViewDTO = dao.findCd50(aae036,aae017);
@@ -53,12 +71,30 @@ public class QhldzmInterviceImpl implements QhldzmIntService {
     public Cd51ViewDTO findCd51(String adc210, String aae017) throws Exception {
         Cd51ViewDTO cd51ViewDTO = null;
         if(aae017!=null && aae017.endsWith("000000")){//省级
-            List cd51sList = dao.findCd51sList(adc210,aae017);
+            List<Cd51ViewDTO> cd51sList = dao.findCd51sList(adc210,aae017);
+            for(int i=0;i<cd51sList.size();i++){
+                String aaa020 = cd51sList.get(i).getAaa020();
+                Double aaa0200 = new Double(aaa020);
+                Double aaa02000 = aaa0200/100000000000l;
+                cd51sList.get(i).setAaa0200(aaa02000);
+            }
             cd51ViewDTO = dao.findCd51s(adc210,aae017);
+            Double aaa0200 = new Double(cd51ViewDTO.getAaa020());
+            Double aaa02000 = aaa0200/100000000000l;
+            cd51ViewDTO.setAaa0200(aaa02000);
             cd51ViewDTO.setCd51List(cd51sList);
         }else if(aae017!=null && aae017.endsWith("0000")){//市州级
-            List cd51zList = dao.findCd51zList(adc210,aae017);
+            List<Cd51ViewDTO> cd51zList = dao.findCd51zList(adc210,aae017);
+            for(int i=0;i<cd51zList.size();i++){
+                String aaa020 = cd51zList.get(i).getAaa020();
+                Double aaa0200 = new Double(aaa020);
+                Double aaa02000 = aaa0200/100000000000l;
+                cd51zList.get(i).setAaa0200(aaa02000);
+            }
             cd51ViewDTO = dao.findCd51z(adc210,aae017);
+            Double aaa0200 = new Double(cd51ViewDTO.getAaa020());
+            Double aaa02000 = aaa0200/100000000000l;
+            cd51ViewDTO.setAaa0200(aaa02000);
             cd51ViewDTO.setCd51List(cd51zList);
         }else{//区县级
             cd51ViewDTO = dao.findCd51(adc210,aae017);
@@ -94,12 +130,30 @@ public class QhldzmInterviceImpl implements QhldzmIntService {
     public Cd52ViewDTO findCd52(String bcc80b, String aae017) throws Exception {
         Cd52ViewDTO cd52ViewDTO = null;
         if(aae017!=null && aae017.endsWith("000000")){//省级
-            List cd52sList = dao.findCd52sList(bcc80b,aae017);
+            List<Cd52ViewDTO> cd52sList = dao.findCd52sList(bcc80b,aae017);
+            for(int i=0;i<cd52sList.size();i++){
+                String aaa020 = cd52sList.get(i).getAaa020();
+                Double aaa0200 = new Double(aaa020);
+                Double aaa02000 = aaa0200/100000000000l;
+                cd52sList.get(i).setAaa0200(aaa02000);
+            }
             cd52ViewDTO = dao.findCd52s(bcc80b,aae017);
+            Double aaa0200 = new Double(cd52ViewDTO.getAaa020());
+            Double aaa02000 = aaa0200/100000000000l;
+            cd52ViewDTO.setAaa0200(aaa02000);
             cd52ViewDTO.setCd52List(cd52sList);
         }else if(aae017!=null && aae017.endsWith("0000")){//市州级
-            List cd52zList = dao.findCd52zList(bcc80b,aae017);
+            List<Cd52ViewDTO> cd52zList = dao.findCd52zList(bcc80b,aae017);
+            for(int i=0;i<cd52zList.size();i++){
+                String aaa020 = cd52zList.get(i).getAaa020();
+                Double aaa0200 = new Double(aaa020);
+                Double aaa02000 = aaa0200/100000000000l;
+                cd52zList.get(i).setAaa0200(aaa02000);
+            }
             cd52ViewDTO = dao.findCd52z(bcc80b,aae017);
+            Double aaa0200 = new Double(cd52ViewDTO.getAaa020());
+            Double aaa02000 = aaa0200/100000000000l;
+            cd52ViewDTO.setAaa0200(aaa02000);
             cd52ViewDTO.setCd52List(cd52zList);
         }else{//区县级
             cd52ViewDTO = dao.findCd52(bcc80b,aae017);
@@ -135,12 +189,30 @@ public class QhldzmInterviceImpl implements QhldzmIntService {
     public Cd53ViewDTO findCd53(String bcca45, String aae017) throws Exception {
         Cd53ViewDTO cd53ViewDTO = null;
         if(aae017!=null && aae017.endsWith("000000")){//省级
-            List cd53sList = dao.findCd53sList(bcca45,aae017);
+            List<Cd53ViewDTO> cd53sList = dao.findCd53sList(bcca45,aae017);
+            for(int i=0;i<cd53sList.size();i++){
+                String aaa020 = cd53sList.get(i).getAaa020();
+                Double aaa0200 = new Double(aaa020);
+                Double aaa02000 = aaa0200/100000000000l;
+                cd53sList.get(i).setAaa0200(aaa02000);
+            }
             cd53ViewDTO = dao.findCd53s(bcca45,aae017);
+            Double aaa0200 = new Double(cd53ViewDTO.getAaa020());
+            Double aaa02000 = aaa0200/100000000000l;
+            cd53ViewDTO.setAaa0200(aaa02000);
             cd53ViewDTO.setCd53List(cd53sList);
         }else if(aae017!=null && aae017.endsWith("0000")){//市州级
-            List cd53zList = dao.findCd53zList(bcca45,aae017);
+            List<Cd53ViewDTO> cd53zList = dao.findCd53zList(bcca45,aae017);
+            for(int i=0;i<cd53zList.size();i++){
+                String aaa020 = cd53zList.get(i).getAaa020();
+                Double aaa0200 = new Double(aaa020);
+                Double aaa02000 = aaa0200/100000000000l;
+                cd53zList.get(i).setAaa0200(aaa02000);
+            }
             cd53ViewDTO = dao.findCd53z(bcca45,aae017);
+            Double aaa0200 = new Double(cd53ViewDTO.getAaa020());
+            Double aaa02000 = aaa0200/100000000000l;
+            cd53ViewDTO.setAaa0200(aaa02000);
             cd53ViewDTO.setCd53List(cd53zList);
         }else{//区县级
             cd53ViewDTO = dao.findCd53(bcca45,aae017);

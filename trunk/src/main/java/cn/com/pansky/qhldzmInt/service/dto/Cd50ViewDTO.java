@@ -16,9 +16,18 @@ public class Cd50ViewDTO implements java.io.Serializable {
     private List<Cd50ViewDTO> cd50List;
     private List<Cd50ViewDTO> cd50List2;
     private Cd50ViewDTO cd50ViewDTO;
+    private Double aaa0200;
 
     public String getAaa020() {
         return aaa020;
+    }
+
+    public Double getAaa0200() {
+        return aaa0200;
+    }
+
+    public void setAaa0200(Double aaa0200) {
+        this.aaa0200 = aaa0200;
     }
 
     public void setAaa020(String aaa020) {
