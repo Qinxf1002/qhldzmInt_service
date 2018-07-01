@@ -12,9 +12,18 @@ public class Cd51ViewDTO implements java.io.Serializable {
     private String aaa021;
     private String bcd513;
     private String aaa020;
+    private Double aaa0200;
 
     public String getAaa020() {
         return aaa020;
+    }
+
+    public Double getAaa0200() {
+        return aaa0200;
+    }
+
+    public void setAaa0200(Double aaa0200) {
+        this.aaa0200 = aaa0200;
     }
 
     public void setAaa020(String aaa020) {
