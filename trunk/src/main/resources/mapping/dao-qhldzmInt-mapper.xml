@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.pansky.qhldzmInt.datacon">
+
+    <select id="cd50FindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd50ViewDTO">
+    <![CDATA[
+         select
+       a.bcd501,
+       a.bcd502,
+       (select aaa021
+          from aa12
+         where aaa020 =
+               (substr(#{aae017,jdbcType=VARCHAR}, 1, 4) || '00000000')) ||
+       (select aaa021
+          from aa12
+         where aaa020 = (substr(#{aae017,jdbcType=VARCHAR}, 1, 6) || '000000')) as aaa021
+  from cd50 a
+   where a.aae036 = #{aae036,jdbcType=VARCHAR}
+   and a.aae017 = #{aae017,jdbcType=VARCHAR}
+        ]]>
+</select>
+    <select id="cd50sFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd50ViewDTO">
+        <![CDATA[
+   select sum(bcd501) bcd501,
+       sum(bcd502) as bcd502,
+       aaa021,
+       rtrim(to_char(TRUNC(sum(bcd502) / sum(bcd501), 3), 'fm9990.999'),
+             '.') as bcd503
+  from (select bcd501 as bcd501,
+               bcd502 as bcd502,
+               (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
+          from cd50 a
+         where a.aae036 = #{aae036,jdbcType=VARCHAR}
+           and a.aae017 like substr(#{aae017,jdbcType=VARCHAR}, 1, 2) || '%')
+ group by aaa021
+        ]]>
+    </select>
+    <select id="cd50zFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd50ViewDTO">
+        <![CDATA[
+   select sum(bcd501) bcd501,
+       sum(bcd502) as bcd502,
+       aaa021,
+       rtrim(to_char(TRUNC(sum(bcd502) / sum(bcd501), 3), 'fm9990.999'),
+             '.') as bcd503
+  from (select bcd501 as bcd501,
+               bcd502 as bcd502,
+               (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
+          from cd50 a
+         where a.aae036 = #{aae036,jdbcType=VARCHAR}
+           and a.aae017 like substr(#{aae017,jdbcType=VARCHAR}, 1, 4) || '%')
+ group by aaa021
+        ]]>
+    </select>
+
+    <select id="cd50sListFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd50ViewDTO">
+    <![CDATA[
+   select bcd501, bcd502, bcd503, aaa021,aaa020
+  from (select sum(bcd501) as bcd501,
+               sum(bcd502) as bcd502,
+               rtrim(to_char(TRUNC(sum(bcd502) / sum(bcd501),3), 'fm9990.999'), '.') as bcd503,
+               (select aaa021
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa021，
+               (select aaa020
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+          from cd50
+          where cd50.aae036 = #{aae036,jdbcType=VARCHAR}
+         group by substr(aae017,1,4)
+         order by bcd503 desc
+       )
+       where aaa021 != '青海省省本级'
+ order by bcd503 desc
+        ]]>
+</select>
+
+    <select id="cd50zListFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd50ViewDTO">
+        <![CDATA[
+   select bcd501, bcd502, bcd503, aaa021,aaa020
+  from (select sum(bcd501) as bcd501,
+               sum(bcd502) as bcd502,
+               rtrim(to_char(TRUNC(sum(bcd502) / sum(bcd501),3), 'fm9990.999'), '.') as bcd503,
+               (select aaa021
+                  from aa12
+                 where aaa020 = substr(aae017,1,6) || '000000') as aaa021,
+                 (select aaa020
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+          from cd50
+          where cd50.aae036 = #{aae036,jdbcType=VARCHAR} and cd50.aae017 like (substr(#{aae017,jdbcType=VARCHAR},1,4) || '%')
+         group by substr(aae017,1,6)
+         order by bcd503 desc
+       )
+    where aaa021 != '西宁市市本级'
+ order by bcd503 desc
+        ]]>
+    </select>
+
+
+    <select id="cd51sListFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd51ViewDTO">
+        <![CDATA[
+   select bcd511, bcd512, bcd513, aaa021,aaa020
+  from (select sum(bcd511) as bcd511,
+               sum(bcd512) as bcd512,
+               rtrim(to_char(TRUNC(sum(bcd511) / (sum(bcd512)+sum(bcd511)),3), 'fm9990.999'), '.') as bcd513,
+               (select aaa021
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa021,
+                 (select aaa020
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+          from cd51
+          where cd51.adc210 = #{adc210,jdbcType=VARCHAR}
+         group by substr(aae017,1,4)
+         order by bcd513 desc
+       )
+       where aaa021 is not null and aaa021 != '青海省省本级'
+ order by bcd513 desc
+        ]]>
+    </select>
+
+    <select id="cd51zListFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd51ViewDTO">
+        <![CDATA[
+   select bcd511, bcd512, bcd513, aaa021,aaa020
+  from (select sum(bcd511) as bcd511,
+               sum(bcd512) as bcd512,
+               rtrim(to_char(TRUNC(sum(bcd511) / (sum(bcd512)+sum(bcd511)),3), 'fm9990.999'), '.') as bcd513,
+               (select aaa021
+                  from aa12
+                 where aaa020 = substr(aae017,1,6) || '000000') as aaa021,
+                 (select aaa020
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+          from cd51
+          where cd51.adc210 = #{adc210,jdbcType=VARCHAR} and cd51.aae017 like (substr(#{aae017,jdbcType=VARCHAR},1,4) || '%')
+         group by substr(aae017,1,6)
+         order by bcd513 desc
+       )
+       where aaa021 is not null and aaa021 != '西宁市市本级' and aaa021 != '西宁市'
+ order by bcd513 desc
+        ]]>
+    </select>
+
+
+    <select id="cd51FindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd51ViewDTO">
+        <![CDATA[
+         select
+       a.bcd511,
+       a.bcd512,
+       (select aaa021
+          from aa12
+         where aaa020 =
+               (substr(#{aae017,jdbcType=VARCHAR}, 1, 4) || '00000000')) ||
+       (select aaa021
+          from aa12
+         where aaa020 = (substr(#{aae017,jdbcType=VARCHAR}, 1, 6) || '000000')) as aaa021
+  from cd51 a
+   where a.adc210 = #{adc210,jdbcType=VARCHAR}
+   and a.aae017 = substr(#{aae017,jdbcType=VARCHAR}, 1, 6)
+        ]]>
+    </select>
+
+    <select id="cd51sFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd51ViewDTO">
+        <![CDATA[
+   select sum(bcd511) bcd511,
+       sum(bcd512) as bcd512,
+       aaa021,
+       rtrim(to_char(TRUNC(sum(bcd511) / (sum(bcd512)+sum(bcd511)),3), 'fm9990.999'), '.') as bcd513
+  from (select bcd511 as bcd511,
+               bcd512 as bcd512,
+               (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
+          from cd51 a
+         where a.adc210 = #{adc210,jdbcType=VARCHAR}
+           and a.aae017 like substr(#{aae017,jdbcType=VARCHAR}, 1, 2) || '%')
+ group by aaa021
+        ]]>
+    </select>
+
+    <select id="cd51zFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd51ViewDTO">
+        <![CDATA[
+   select sum(bcd511) bcd511,
+       sum(bcd512) as bcd512,
+       aaa021,
+       rtrim(to_char(TRUNC(sum(bcd511) / (sum(bcd512)+sum(bcd511)),3), 'fm9990.999'), '.') as bcd513
+  from (select bcd511 as bcd511,
+               bcd512 as bcd512,
+               (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
+          from cd51 a
+         where a.adc210 = #{adc210,jdbcType=VARCHAR}
+           and a.aae017 like substr(#{aae017,jdbcType=VARCHAR}, 1, 4) || '%')
+ group by aaa021
+        ]]>
+    </select>
+
+    <select id="cd52sFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd52ViewDTO">
+        <![CDATA[
+        select sum(bcd521) bcd521,
+       sum(bcd522) as bcd522,
+       aaa021,
+       case when sum(bcd521) = 0 then '0'
+                 else rtrim(to_char(TRUNC(sum(bcd522) / (sum(bcd521)),3), 'fm9990.999'), '.') end as bcd523
+  from (select bcd521 as bcd521,
+               bcd522 as bcd522,
+               (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
+          from cd52 a
+         where a.bcc80b = #{bcc80b,jdbcType=VARCHAR}
+           and a.aae017 like substr(#{aae017,jdbcType=VARCHAR}, 1, 2) || '%')
+ group by aaa021
+        ]]>
+    </select>
+
+    <select id="cd52zFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd52ViewDTO">
+        <![CDATA[
+   select sum(bcd521) bcd521,
+       sum(bcd522) as bcd522,
+       aaa021,
+       case when sum(bcd521) = 0 then '0'
+                 else rtrim(to_char(TRUNC(sum(bcd522) / (sum(bcd521)),3), 'fm9990.999'), '.') end as bcd523
+  from (select bcd521 as bcd521,
+               bcd522 as bcd522,
+               (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
+          from cd52 a
+         where a.bcc80b = #{bcc80b,jdbcType=VARCHAR}
+           and a.aae017 like substr(#{aae017,jdbcType=VARCHAR}, 1, 4) || '%')
+ group by aaa021
+        ]]>
+    </select>
+
+    <select id="cd52FindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd52ViewDTO">
+        <![CDATA[
+        select
+       a.bcd521,
+       a.bcd522,
+       (select aaa021
+          from aa12
+         where aaa020 =
+               (substr(#{aae017,jdbcType=VARCHAR}, 1, 4) || '00000000')) ||
+       (select aaa021
+          from aa12
+         where aaa020 = (substr(#{aae017,jdbcType=VARCHAR}, 1, 6) || '000000')) as aaa021
+  from cd52 a
+   where a.bcc80b = #{bcc80b,jdbcType=VARCHAR}
+   and a.aae017 = substr(#{aae017,jdbcType=VARCHAR}, 1, 6)
+        ]]>
+    </select>
+
+    <select id="cd52sListFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd52ViewDTO">
+        <![CDATA[
+       select bcd521, bcd522, bcd523, aaa021,aaa020
+  from (select sum(bcd521) as bcd521,
+               sum(bcd522) as bcd522,
+               case when sum(bcd521) = 0 then '0'
+                 else rtrim(to_char(TRUNC(sum(bcd522) / (sum(bcd521)),3), 'fm9990.999'), '.') end as bcd523,
+               (select aaa021
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa021,
+                 (select aaa020
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+          from cd52
+          where cd52.bcc80b = #{bcc80b,jdbcType=VARCHAR}
+         group by substr(aae017,1,4)
+         order by bcd523 desc
+       )
+ order by bcd523 desc
+        ]]>
+    </select>
+
+    <select id="cd52zListFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd52ViewDTO">
+        <![CDATA[
+select bcd521, bcd522, bcd523, aaa021,aaa020
+  from (select sum(bcd521) as bcd521,
+               sum(bcd522) as bcd522,
+               case when sum(bcd521) = 0 then '0'
+                 else rtrim(to_char(TRUNC(sum(bcd522) / (sum(bcd521)),3), 'fm9990.999'), '.') end as bcd523,
+               (select aaa021
+                  from aa12
+                 where aaa020 = substr(aae017,1,6) || '000000') as aaa021,
+                 (select aaa020
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+          from cd52
+          where cd52.bcc80b = #{bcc80b,jdbcType=VARCHAR} and cd52.aae017 like (substr(#{aae017,jdbcType=VARCHAR},1,4) || '%')
+         group by substr(aae017,1,6)
+         order by bcd523 desc
+       )
+       where aaa021 is not null
+ order by bcd523 desc
+        ]]>
+    </select>
+
+    <select id="cd53FindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd53ViewDTO">
+        <![CDATA[
+        select
+       a.bcd531,
+       a.bcd532,
+       (select aaa021
+          from aa12
+         where aaa020 =
+               (substr(#{aae017,jdbcType=VARCHAR}, 1, 4) || '00000000')) ||
+       (select aaa021
+          from aa12
+         where aaa020 = (substr(#{aae017,jdbcType=VARCHAR}, 1, 6) || '000000')) as aaa021
+  from cd53 a
+   where a.bcca45 = #{bcca45,jdbcType=VARCHAR}
+   and a.aae017 = substr(#{aae017,jdbcType=VARCHAR}, 1, 6)
+        ]]>
+    </select>
+
+    <select id="cd53sFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd53ViewDTO">
+        <![CDATA[
+   select sum(bcd531) bcd531,
+       sum(bcd532) as bcd532,
+       aaa021,
+       rtrim(to_char(TRUNC(sum(bcd532) / sum(bcd531),3), 'fm9990.999'), '.') as bcd533
+  from (select bcd531 as bcd531,
+               bcd532 as bcd532,
+               (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
+          from cd53 a
+         where a.bcca45 = #{bcca45,jdbcType=VARCHAR}
+           and a.aae017 like substr(#{aae017,jdbcType=VARCHAR}, 1, 2) || '%')
+ group by aaa021
+        ]]>
+    </select>
+
+    <select id="cd53zFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd53ViewDTO">
+        <![CDATA[
+   select sum(bcd531) bcd531,
+       sum(bcd532) as bcd532,
+       aaa021,
+       rtrim(to_char(TRUNC(sum(bcd532) / sum(bcd531),3), 'fm9990.999'), '.') as bcd533
+  from (select bcd531 as bcd531,
+               bcd532 as bcd532,
+               (select aaa021 from aa12 where aaa020 = #{aae017,jdbcType=VARCHAR} || '0000') as aaa021
+          from cd53 a
+         where a.bcca45 = #{bcca45,jdbcType=VARCHAR}
+           and a.aae017 like substr(#{aae017,jdbcType=VARCHAR}, 1, 4) || '%')
+ group by aaa021
+        ]]>
+    </select>
+
+    <select id="cd53sListFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd53ViewDTO">
+        <![CDATA[
+   select bcd531, bcd532, bcd533, aaa021,aaa020
+  from (select sum(bcd531) as bcd531,
+               sum(bcd532) as bcd532,
+               rtrim(to_char(TRUNC(sum(bcd532) / sum(bcd531),3), 'fm9990.999'), '.') as bcd533,
+               (select aaa021
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa021,
+                 (select aaa020
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+          from cd53
+          where cd53.bcca45 = #{bcca45,jdbcType=VARCHAR}
+         group by substr(aae017,1,4)
+         order by bcd533 desc
+       )
+       WHERE AAA021 != '青海省' AND AAA021 != '青海省省本级'
+ order by bcd533 desc
+        ]]>
+    </select>
+
+    <select id="cd53zListFindSql" parameterType="java.util.Map" resultType="cn.com.pansky.qhldzmInt.service.dto.Cd53ViewDTO">
+        <![CDATA[
+    select bcd531, bcd532, bcd533, aaa021,aaa020
+  from (select sum(bcd531) as bcd531,
+               sum(bcd532) as bcd532,
+               case when sum(bcd531) = 0 then '0'
+                 else rtrim(to_char(TRUNC(sum(bcd532) / (sum(bcd531)),3), 'fm9990.999'), '.') end as bcd533,
+               (select aaa021
+                  from aa12
+                 where aaa020 = substr(aae017,1,6) || '000000') as aaa021,
+                 (select aaa020
+                  from aa12
+                 where aaa020 = substr(aae017,1,4) || '00000000') as aaa020
+          from cd53
+          where cd53.bcca45 = #{bcca45,jdbcType=VARCHAR} and cd53.aae017 like (substr(#{aae017,jdbcType=VARCHAR},1,4) || '%')
+         group by substr(aae017,1,6)
+         order by bcd533 desc
+       )
+       where aaa021 is not null and aaa021 != '西宁市市本级' and aaa021 != '西宁市'
+ order by bcd533 desc
+        ]]>
+    </select>
+
+    <select id="findCd50Year" parameterType="java.util.Map" resultType="string">
+        <![CDATA[
+          SELECT DISTINCT(aae036) FROM cd50
+        ]]>
+    </select>
+
+    <select id="findCd51Year" parameterType="java.util.Map" resultType="string">
+        <![CDATA[
+          SELECT DISTINCT(adc210) FROM cd51
+        ]]>
+    </select>
+
+    <select id="findCd52Year" parameterType="java.util.Map" resultType="string">
+        <![CDATA[
+          SELECT DISTINCT(bcc80b) FROM cd52
+        ]]>
+    </select>
+
+    <select id="findCd53Year" parameterType="java.util.Map" resultType="string">
+        <![CDATA[
+          SELECT DISTINCT(bcca45) FROM cd53
+        ]]>
+    </select>
+
+</mapper>

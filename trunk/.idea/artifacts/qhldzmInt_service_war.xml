@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="qhldzmInt_service:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="qhldzmInt_service.war">
+      <element id="artifact" artifact-name="qhldzmInt_service:war exploded" />
+    </root>
+  </artifact>
+</component>
