@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+    <!-- 自动扫描 -->
+    <context:component-scan base-package="cn.com.pansky.qhldzmInt.service" />
+
+    <!-- 引入配置文件 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config/application.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!-- JNDI Data Source -->
+    <!-- 咸阳医保数据源 -->
+
+
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>qhldzmInt</value>
+        </property>
+         </bean>
+
+    <!-- dataSource 配置 -->
+    <!--
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+
+        <property name="initialSize" value="${ds.initialSize}"/>
+        <property name="minIdle" value="${ds.minIdle}"/>
+        <property name="maxActive" value="${ds.maxActive}"/>
+
+
+        <property name="maxWait" value="${ds.maxWait}"/>
+
+
+        <property name="timeBetweenEvictionRunsMillis" value="${ds.timeBetweenEvictionRunsMillis}"/>
+
+
+        <property name="minEvictableIdleTimeMillis" value="${ds.minEvictableIdleTimeMillis}"/>
+
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+
+
+        <property name="poolPreparedStatements" value="false"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
+
+
+        <property name="filters" value="stat"/>
+    </bean>
+    -->
+    <!-- 咸阳工伤生育数据源 -->
+
+
+
+    <!--
+    <bean id="dataSource1" class="org.springframework.jndi.JndiObjectFactoryBean">
+           <property name="jndiName">
+               <value>xy_workinsu</value>
+           </property>
+    </bean>
+        -->
+
+    <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 自动扫描mapping.xml文件 -->
+        <property name="mapperLocations" value="classpath*:mapping/*-mapper.xml" />
+    </bean>
+
+
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.com.pansky.hzLabor.service.dao.*" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+
+
+        <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+        <!--:不需要，使用默认
+        <property name="jndiTemplate">
+            <ref bean="jndiTemplate"/>
+        </property>
+-->
+        <property name="userTransactionName">
+            <value>weblogic/transaction/UserTransaction</value>
+        </property>
+        </bean>
+
+
+</beans>
